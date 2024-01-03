@@ -5,15 +5,18 @@ import (
 )
 
 func TestExtractNumber(t *testing.T) {
-	input := "treb7uchet"
-	expectedResult := 77
-	// pqr3stu8vwx
-	// a1b2c3d4e5f
-	// treb7uchet"
-	result := extractNumber(input)
+	inputExpectationsMap := map[string]int{
+		"1abc2":       12,
+		"pqr3stu8vwx": 38,
+		"a1b2c3d4e5f": 15,
+		"treb7uchet":  77,
+	}
 
-	if result != expectedResult {
-		t.Fatalf("Expected %d, received: %d", expectedResult, result)
+	for input, expectedResult := range inputExpectationsMap {
+		result := extractNumber(input)
+		if result != expectedResult {
+			t.Fatalf("Expected %d, received: %d", expectedResult, result)
+		}
 	}
 }
 
