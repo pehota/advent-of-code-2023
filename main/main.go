@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"log"
 
-	"example.com/advent-of-code/day-1"
+	"github.com/pehota/advent-of-code/solution"
 )
 
 func main() {
-	message, err := day1.Run()
+	message, err := solution.Run()
 	if err != nil {
 		log.Fatal(err)
 	}
