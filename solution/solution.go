@@ -31,10 +31,30 @@ func Run(input []string) (int, error) {
 	return sum, nil
 }
 
+func normaliseMatch(input string) string {
+	wordToIntMap := map[string]string{
+		"one":   "1",
+		"two":   "2",
+		"three": "3",
+		"four":  "4",
+		"five":  "5",
+		"six":   "6",
+		"seven": "7",
+		"eight": "8",
+		"nine":  "9",
+	}
+	val, keyExists := wordToIntMap[input]
+
+	if keyExists {
+		return val
+	}
+	return input
+}
+
 func extractNumber(line string) int {
-	re, _ := regexp.Compile(`\d`)
+	re, _ := regexp.Compile(`(one|two|three|four|five|six|seven|eight|nine|\d)`)
 	matches := re.FindAllString(line, -1)
-	result := matches[0] + matches[len(matches)-1]
+	result := normaliseMatch(matches[0]) + normaliseMatch(matches[len(matches)-1])
 	conv, _ := strconv.Atoi(result)
 	return conv
 }

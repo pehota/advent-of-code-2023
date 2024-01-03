@@ -17,6 +17,25 @@ func TestExtractNumber(t *testing.T) {
 	}
 }
 
+func TestExtractNumberWithWords(t *testing.T) {
+	inputExpectationsMap := map[string]int{
+		"two1nine":         29,
+		"eightwothree":     83,
+		"abcone2threexyz":  13,
+		"xtwone3four":      24,
+		"4nineeightseven2": 42,
+		"zoneight234":      14,
+		"7pqrstsixteen":    76,
+	}
+
+	for input, expectedResult := range inputExpectationsMap {
+		result := extractNumber(input)
+		if result != expectedResult {
+			t.Fatalf("Expected %d, received: %d", expectedResult, result)
+		}
+	}
+}
+
 func TestCalculateSum(t *testing.T) {
 	input := []int{1, 0, 2}
 	expectedResult := 3
