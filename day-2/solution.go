@@ -8,7 +8,16 @@ import (
 
 func Run() (int, error) {
 	input := getInput()
-	return len(input), nil
+	games := parseInput(input)
+	constraints := gameOutcome{red: 12, green: 13, blue: 14}
+	result := 0
+
+	for _, game := range games {
+		if gameWithinConstraints(game, constraints) {
+			result += game.id
+		}
+	}
+	return result, nil
 }
 
 type gameOutcome struct {
@@ -54,8 +63,26 @@ func extractDraws(line string) []gameOutcome {
 func parseGame(line string) (parseResult, error) {
 	gameId := extractGameId(line)
 	draws := extractDraws(line)
-	// re := regexp.MustCompile(`Game ([\d]{1,}): (([\d]{1,}) (red|green|blue)(,|;|$)){1,}`)
-	// matches := re.FindAllString(line, -1)
-	// fmt.Println(line, matches)
+
 	return parseResult{gameId, draws}, nil
+}
+
+func parseInput(input []string) []parseResult {
+	result := make([]parseResult, 0)
+
+	for _, line := range input {
+		game, _ := parseGame(line)
+		result = append(result, game)
+	}
+
+	return result
+}
+
+func gameWithinConstraints(game parseResult, constraints gameOutcome) bool {
+	for _, draw := range game.draws {
+		if draw.blue > constraints.blue || draw.red > constraints.red || draw.green > constraints.green {
+			return false
+		}
+	}
+	return true
 }
