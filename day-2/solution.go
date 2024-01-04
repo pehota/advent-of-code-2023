@@ -9,7 +9,7 @@ import (
 func Run() (int, error) {
 	input := getInput()
 	games := parseInput(input)
-	constraints := gameOutcome{red: 12, green: 13, blue: 14}
+	constraints := Draw{red: 12, green: 13, blue: 14}
 	result := 0
 
 	for _, game := range games {
@@ -20,15 +20,15 @@ func Run() (int, error) {
 	return result, nil
 }
 
-type gameOutcome struct {
+type Draw struct {
 	red   int
 	green int
 	blue  int
 }
 
-type parseResult struct {
+type Game struct {
+	draws []Draw
 	id    int
-	draws []gameOutcome
 }
 
 func extractGameId(line string) int {
@@ -38,10 +38,10 @@ func extractGameId(line string) int {
 	return id
 }
 
-func extractDraws(line string) []gameOutcome {
+func extractDraws(line string) []Draw {
 	outcomesInput := strings.Split(line, ":")[1]
 	outcomes := strings.Split(outcomesInput, ";")
-	result := make([]gameOutcome, 0)
+	result := make([]Draw, 0)
 
 	for _, outcome := range outcomes {
 		re := regexp.MustCompile(`([\d]{1,}) (red|green|blue)`)
@@ -54,21 +54,21 @@ func extractDraws(line string) []gameOutcome {
 			tmp[keyVal[1]] = val
 		}
 
-		result = append(result, gameOutcome{red: tmp["red"], green: tmp["green"], blue: tmp["blue"]})
+		result = append(result, Draw{red: tmp["red"], green: tmp["green"], blue: tmp["blue"]})
 	}
 
 	return result
 }
 
-func parseGame(line string) (parseResult, error) {
+func parseGame(line string) (Game, error) {
 	gameId := extractGameId(line)
 	draws := extractDraws(line)
 
-	return parseResult{gameId, draws}, nil
+	return Game{id: gameId, draws: draws}, nil
 }
 
-func parseInput(input []string) []parseResult {
-	result := make([]parseResult, 0)
+func parseInput(input []string) []Game {
+	result := make([]Game, 0)
 
 	for _, line := range input {
 		game, _ := parseGame(line)
@@ -78,7 +78,7 @@ func parseInput(input []string) []parseResult {
 	return result
 }
 
-func gameWithinConstraints(game parseResult, constraints gameOutcome) bool {
+func gameWithinConstraints(game Game, constraints Draw) bool {
 	for _, draw := range game.draws {
 		if draw.blue > constraints.blue || draw.red > constraints.red || draw.green > constraints.green {
 			return false
