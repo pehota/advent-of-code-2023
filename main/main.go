@@ -9,10 +9,11 @@ import (
 
 func main() {
 	input := getInput()
-	message, err := solution.Run(input)
+	result, err := solution.Run(input)
+
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println(message)
+  fmt.Printf("result: %d", result)
 }
