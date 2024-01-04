@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	result, err := day2.Run()
+	result, err := day2.RunPart2()
 	if err != nil {
 		log.Fatal(err)
 	}

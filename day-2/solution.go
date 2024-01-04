@@ -20,6 +20,18 @@ func Run() (int, error) {
 	return result, nil
 }
 
+func RunPart2() (int, error) {
+	input := getInput()
+	games := parseInput(input)
+	result := 0
+
+	for _, game := range games {
+		minimumSet := resolveMinimumGameSet(game)
+		result += minimumSet.red * minimumSet.green * minimumSet.blue
+	}
+	return result, nil
+}
+
 type Draw struct {
 	red   int
 	green int
@@ -85,4 +97,16 @@ func gameWithinConstraints(game Game, constraints Draw) bool {
 		}
 	}
 	return true
+}
+
+func resolveMinimumGameSet(game Game) Draw {
+	result := Draw{red: 0, green: 0, blue: 0}
+
+	for _, draw := range game.draws {
+		result.red = max(result.red, draw.red)
+		result.green = max(result.green, draw.green)
+		result.blue = max(result.blue, draw.blue)
+	}
+
+	return result
 }

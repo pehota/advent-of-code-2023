@@ -50,3 +50,21 @@ func TestGameWithinConstraints(t *testing.T) {
 		}
 	}
 }
+
+func TestGameSmallestSet(t *testing.T) {
+	input := map[string]Draw{
+		"Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green":                   {red: 4, green: 2, blue: 6},
+		"Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue":         {red: 1, green: 3, blue: 4},
+		"Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red": {red: 20, green: 13, blue: 6},
+		"Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red": {red: 14, green: 3, blue: 15},
+		"Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green":                   {red: 6, green: 3, blue: 2},
+	}
+
+	for gameInput, expectedResult := range input {
+		game, _ := parseGame(gameInput)
+		result := resolveMinimumGameSet(game)
+		if result != expectedResult {
+			t.Fatalf("Expected: %d; received: %d", expectedResult, result)
+		}
+	}
+}
