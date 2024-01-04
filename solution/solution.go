@@ -51,10 +51,21 @@ func normaliseMatch(input string) string {
 	return input
 }
 
+func reverseString(s string) string {
+	reversed := ""
+	for _, v := range s {
+		reversed = string(v) + reversed
+	}
+	return reversed
+}
+
 func extractNumber(line string) int {
 	re, _ := regexp.Compile(`(one|two|three|four|five|six|seven|eight|nine|\d)`)
-	matches := re.FindAllString(line, -1)
-	result := normaliseMatch(matches[0]) + normaliseMatch(matches[len(matches)-1])
+	endRe, _ := regexp.Compile(`(eno|owt|eerht|ruof|evif|xis|neves|thgie|enin|\d)`)
+	firstMatch := re.FindString(line)
+	lastMatch := reverseString(endRe.FindString(reverseString(line)))
+
+	result := normaliseMatch(firstMatch) + normaliseMatch(lastMatch)
 	conv, _ := strconv.Atoi(result)
 	return conv
 }

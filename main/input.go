@@ -1006,3 +1006,20 @@ four3threeonehbfhttgn39sqpctngqmzkhttn
 rphtbkncs4nznsix
 6three2sixsix9eightfour`, "\n")
 }
+
+func getDay1Example1Input() []string {
+	return strings.Split(`1abc2
+pqr3stu8vwx
+a1b2c3d4e5f
+treb7uchet`, "\n")
+}
+
+func getDay1Example2Input() []string {
+	return strings.Split(`two1nine
+eightwothree
+abcone2threexyz
+xtwone3four
+4nineeightseven2
+zoneight234
+7pqrstsixteen`, "\n")
+}
