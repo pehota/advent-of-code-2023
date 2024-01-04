@@ -1,4 +1,4 @@
-package solution
+package day1
 
 import (
 	"errors"
@@ -22,7 +22,9 @@ func prepareInput(input []string) []int {
 	return mapped
 }
 
-func Run(input []string) (int, error) {
+func Run() (int, error) {
+	input := getInput()
+
 	if len(input) < 1 {
 		return -1, errors.New("empty input")
 	}

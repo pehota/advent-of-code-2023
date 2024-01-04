@@ -8,8 +8,7 @@ import (
 )
 
 func main() {
-	input := getInput()
-	result, err := solution.Run(input)
+	result, err := day1.Run()
 	if err != nil {
 		log.Fatal(err)
 	}
